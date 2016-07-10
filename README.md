@@ -6,3 +6,9 @@ write down my learning note.
 + To finish my job, I still need to learn a lot by myself on the Internet.
 + In order to improve my working efficience, I decided to write some simple learning notes and push them on the github for my simple reference in the future.
 + Most of these notes are concluded by myself, while some of them are others' hard work. I push them with their writers' agreement.
++ 
+
+----
+
+**文章可以转载，但请标注出处**
+**The articles can be republished, while you need to note where they come, thanks**
