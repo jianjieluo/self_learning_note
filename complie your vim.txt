@@ -1,0 +1,54 @@
+./configure --with-features=huge --enable-gui=gtk2 --enable-cscope --prefix=/usr --enable-python3interp=yes --with-python3-config-dir=/usr/lib/python3.5/config/ --enable-pythoninterp=yes --with-python-config-dir=/usr/lib/python2.7/config/ --enable-perlinterp=yes --enable-luainterp=yes --with-lua-prefix=/usr/ --enable-rubyinterp=yes
+
+编译成功的信息。。。。。。。。。T_T
+
+
+
+
+
+楼主装了python、python3、lua(如5.1)、ruby外，还需要安装对应的
+python-dev, python3-dev, liblua5.1-dev, ruby-dev
+（如果需要perl，加一个libperl-dev）
+
+
+在src里面make distclean清除config信息
+
+
+
+sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev 
+这些库都要装。。。。
+
+
+
+
+不过安装 gtk2-devel 时应该要用：sudo apt-get install libgtk2.0-dev
+安装 gtk3-devel 时应该要用：sudo apt-get install libgtk-3-dev
+
+-----------------
+
+
+在用户家目录(/home/用户名)下面有一个.vimrc
+/etc下面也有一个vimrc
+
+一般只改用户家目录下面的 .vimrc 此配置文件只针对用户有效
+更改后需使用su - 用户名 来使配置生效(例如 su - zhang3)
+
+.vimrc为隐藏文件 使用ls -al可查看
+
+home目录下，自动生成的是.viminfo, .vimrc和.vim/都要自己建
+
+前面有.的都可以看做是隐藏文件，所以要用ls -al来看
+
+
+
+-----------
+
+1、安装库， 安装你想要支持的那些软件和那些库。。。。
+2、config
+3、make
+4、make install
+
+
+
+
+./configure --with-features=huge --enable-gui=gtk2 --enable-cscope --prefix=/usr --enable-python3interp=yes --enable-pythoninterp=yes --with-python-config-dir=/usr/lib/python2.7/config/ --enable-perlinterp=yes --enable-luainterp=yes --with-lua-prefix=/usr/ --enable-rubyinterp=yes
