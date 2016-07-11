@@ -18,3 +18,15 @@
     - 必须评估“将函数声明为inline”所带来的冲击，因为其无法随程序库的升级而升级
     - 大部分的调试器对于inline的函数束手无策，**因为不能在一个并不存在的函数内设置断点**
     - 在开发时，一开始先不要将任何函数声明为inline，或至少将inlining施行的范围局限。我们应该要做的是开发完成后，再应用程序的80-20经验法则，对花费时间多的那20%的代码上用inline或其他方法来瘦身。
+
+1. Accustoming Yourself to C++
+    - View C++ as a federation of languages
+    - 将c++看成4个次语言
+        - C
+        - Object-Oriented C++
+        - Template C++
+        - STL
+
+2. Prefer consts, enums, and inlines to #defines
+    - 对于单纯常量，最好以const对象或enums替换#defines
+    - 对于形似函数的宏(macros), 最好改用inline-template 函数替换#defines
