@@ -30,3 +30,16 @@
 2. Prefer consts, enums, and inlines to #defines
     - 对于单纯常量，最好以const对象或enums替换#defines
     - 对于形似函数的宏(macros), 最好改用inline-template 函数替换#defines
+
+3. Use const whenever possible.
+    - const std::vector<int>::iterator iter = vec.begin();  // iter的作用像个T* const
+    - std::vector<int>::const_iterator cIter = vec.begin();  // iter的作用像个const T*
+    - const 成员函数内是不能修改成员变量的
+    - mutable关键字使得被修饰的成员变量可能总是会被更改，即使在const成员函数内
+    - const 和 non-const 成员函数中避免重复
+        - 当两者有着实质等价的实现时，令 non-const 版本调用const版本可以避免代码重复
+    - cosnt 可被施加于任何作用域内的对象，函数参数，函数返回类型，成员函数本体
+
+4. Make sure that objects are initialized before they're unsigned
+    - 为内置型对象进行手工初始化，因为c++不保证初始化它们
+    - 过哦早函数最好使用 member initialization list ，而不要在构造函数本体内使用赋值操作(assignment).初始值列出的成员变量，其排列次序应该和它们在class中的声明次序相同
