@@ -78,3 +78,44 @@
 7. Declare destructors virtual in polymorphic base classes
     - polymorphic base classes 应该声明一个 virtual 析构函数。如果class带有任何 virtual 函数， 它就应该拥有一个 virtual 析构函数。
     - Classes 的设计目的如果不是作为 base classes 使用， 或不是为了具备多态性， 就不该声明 virtual destructor.
+
+8. Prevent exceptions from leaving destructors. （还不是很懂）
+    - 析构函数绝对不要吐出异常， 如果一个被析构函数调用的函数可能会抛出异常，析构函数应该捕捉任何异常，然后吞下它们（不传播）或者结束程序
+
+9. Never call virtual functions during construction or destruction
+    - 在构造和析构期间不要调用virtual函数，因为这类调用从不下降至 derived class.
+
+10. Have assignment operators return a reference to \*this.
+    - 只是一个约定而已，最好随众，为的是可以实现连续赋值的效果
+11. Handle assignment to self in operator=
+    ```cpp
+    class Bitmap {...};
+    class A {
+      ...
+    private:
+      Bitmap* pb;
+    };
+
+    A& A::operator=(const A& rhs) {
+      delete pb;
+      pb = new Bitmap(*rhs.ph);
+      return *this;
+    }   // 当this与rhs指的是同一个区域的时候，就会出现问题
+    ```
+    - 两种方法： 证同测试 and "copy and swap" 法则
+      1. 在操作开始之前，判断两者是否是同一个东西，如果是，就不做任何事情  // 这样简单，但是会降低速度，因为加入了一个if结构，而且会扩大代码
+      2. copy and swap : 先拷贝一个副本，然后交换副本与\*this的内容
+
+12. Copy all parts of an object.
+    - 若你为class添加一个成员变量，则必须同时修改copying函数-> 以及所有构造函数（编译器不会因为你复制漏了而报错）
+    - Copying 函数应该确保赋值对象内的所有成员变量“及”所有base class 成分”
+        - 在派生类的拷贝构造函数中，用初始值列表显式调用积累的拷贝构造函数
+        - 在派生类的assignment operator 中， 显式调用=的重载
+    ```cpp
+    DerivedClass::operator=(const DerivedClass& rhs) {
+      BaseClass::operator=(rhs);
+      ...
+      return *this;
+    }
+    ```
+    - 不要尝试以某个copying函数实现另一个copying函数。应该将共同机能放进第三个函数中，并由两个coping函数共同调用. **这个函数往往是private而且常常被命名为init**。
