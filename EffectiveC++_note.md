@@ -43,3 +43,38 @@
 4. Make sure that objects are initialized before they're unsigned
     - 为内置型对象进行手工初始化，因为c++不保证初始化它们
     - 过哦早函数最好使用 member initialization list ，而不要在构造函数本体内使用赋值操作(assignment).初始值列出的成员变量，其排列次序应该和它们在class中的声明次序相同
+
+5. Know what functions C++ silently writes and calls
+    - 4 functions
+        - copy Constructor
+        - copy assignment operator
+        - destructor
+        - Constructor
+   - all the functions are public and inline
+   - 编译器产生出的析构函数是non-virtual 的，除非这个class的base class 声明为 virtual
+   - 若声明了一个构造构函数，编译器就不会再创建default构造函数
+   - C++并不允许“让reference改指向不同对象”
+   - class 内含 reference 成员， const 成员时， 编译器无法生成copy Constructor.
+   - base class 中 copy 为 private, 则 derived class 中也无法自动生成。
+
+6. Explicitly disallow the use of compiler-generated functions you do not want
+    - 将相应的成员函数声明为private并且不予实现
+    - 使用像 Uncopyable 这样的 base class （可以把错误提早到编译期）
+        ```cpp
+        class Uncopyable {
+        protected:
+          Uncopyable() {}
+          ~Uncopyable() {}
+        private:
+          Uncopyable(const Uncopyable&);
+          Uncopyable& operator=(const Uncopyable&);
+        };
+
+        class haha : private Uncopyable {
+          ...
+        };
+        ```
+
+7. Declare destructors virtual in polymorphic base classes
+    - polymorphic base classes 应该声明一个 virtual 析构函数。如果class带有任何 virtual 函数， 它就应该拥有一个 virtual 析构函数。
+    - Classes 的设计目的如果不是作为 base classes 使用， 或不是为了具备多态性， 就不该声明 virtual destructor.
